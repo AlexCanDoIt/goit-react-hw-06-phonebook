@@ -1,10 +1,14 @@
 import PropTypes from 'prop-types';
-import styles from './Contact.module.css'
+import IconButton from '../IconButton';
+import { ReactComponent as DeleteIcon } from '../../icons/delete.svg';
+import styles from './Contact.module.css';
 
 const Contact = ({ name, number, onDelete }) => (
   <>
     <span className={styles.text}>{name}: {number}</span>
-    <button className={styles.button} type="button" onClick={onDelete}>Delete</button>
+    <IconButton onClick={onDelete} aria-label="Delete contacts">
+      <DeleteIcon width="30" height="30" fill="#fff" />
+    </IconButton>
   </>
 )
 

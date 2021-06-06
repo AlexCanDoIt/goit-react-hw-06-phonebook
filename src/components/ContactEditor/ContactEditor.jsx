@@ -1,8 +1,10 @@
 import { Component } from 'react';
 import shortid from 'shortid';
-import styles from './ContactForm.module.css'
+import { connect } from 'react-redux';
+import contactsActions from '../../redux/contacts/contacts-actions';
+import styles from './ContactEditor.module.css';
 
-class ContactForm extends Component {
+class ContactEditor extends Component {
   state = {
     name: '',
     number: '',
@@ -17,9 +19,9 @@ class ContactForm extends Component {
 
     const { name, number } = this.state;
 
-    this.props.onSubmit(name, number)
-
-    this.setState({name: '', number: ''})
+    this.props.onSubmit(name, number);
+    this.props.onSave();
+    this.setState({ name: '', number: '' });
   }
 
   nameInputId = shortid.generate();
@@ -60,4 +62,8 @@ class ContactForm extends Component {
   }
 }
 
-export default ContactForm;
+const mapDispatchToProps = dispatch => ({
+  onSubmit: (name, number) => dispatch(contactsActions.addContact(name, number))
+})
+
+export default connect(null, mapDispatchToProps)(ContactEditor);
