@@ -19,6 +19,11 @@ class ContactEditor extends Component {
 
     const { name, number } = this.state;
 
+    if (this.props.contacts.find(contact => contact.name === name)) {
+          alert(`${name} is already in contacts.`);
+          return;
+    };
+
     this.props.onSubmit(name, number);
     this.props.onSave();
     this.setState({ name: '', number: '' });
@@ -62,8 +67,12 @@ class ContactEditor extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  contacts: state.contacts.items,
+});
+
 const mapDispatchToProps = dispatch => ({
   onSubmit: (name, number) => dispatch(contactsActions.addContact(name, number))
-})
+});
 
-export default connect(null, mapDispatchToProps)(ContactEditor);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactEditor);
